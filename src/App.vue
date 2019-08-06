@@ -7,6 +7,9 @@
       <h1 v-else-if="errorMessage" style="padding-top: 100px;">
         Oops! This error occurs {{ errorMessage }}
       </h1>
+      <h1 v-else-if="!currentBreed" style="padding-top: 100px;">
+        Oops! There is something broken :(
+      </h1>
       <template v-else>
         <h1>Hi, here is a {{ currentBreed.name }} for you!</h1>
         <img :src="currentBreed.image" style="height: 40vh" />
