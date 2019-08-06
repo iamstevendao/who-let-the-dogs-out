@@ -28,4 +28,16 @@ describe('App', () => {
 
     expect(wrapper.isVueInstance()).toBeTruthy();
   });
+
+  it('renders the loading message on first load', () => {
+    const wrapper = mount(App, {
+      localVue,
+      store,
+    });
+
+    expect(wrapper.vm.isLoading).toBeTruthy();
+    const h1s = wrapper.findAll('h1');
+    expect(h1s).toHaveLength(1);
+    expect(h1s.at(0).text()).toContain('Hang in there! We are finding a dog for you.');
+  });
 });
