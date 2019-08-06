@@ -23,7 +23,7 @@
     </div>
     <div
       v-if="savedBreeds.length"
-      style="margin-top: 20px; height: 30vh; border-top: 0.5px solid whitesmoke; padding-top: 10px"
+      style="margin-top: 10px; height: 30vh; border-top: 0.5px solid whitesmoke; padding-top: 10px"
     >
       <span>&#x2764; The loved ones &#x2764;</span>
       <div style="overflow-y: scroll">
