@@ -56,7 +56,12 @@ export default {
     }),
   },
   async mounted() {
-    await this.getAllBreeds();
+    try {
+      await this.getAllBreeds();
+    } catch (error) {
+      // Silent error, since we don't need the list if it's not available
+      console.error(error);
+    }
     this.clickNext();
   },
   methods: {
@@ -87,14 +92,3 @@ export default {
   },
 };
 </script>
-
-<style>
-#app {
-  font-family: "Avenir", Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
-}
-</style>

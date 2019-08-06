@@ -1,7 +1,7 @@
 /* eslint-disable import/prefer-default-export */
 
 /**
- * @summary Safely return value of a key from an object
+ * @summary Safely return the value of a key from an object
  * @function
  * @public
  * @locus client

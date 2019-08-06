@@ -74,6 +74,7 @@ export default new Vuex.Store({
           resolve(state.all);
           return;
         }
+        // If there is no cache, send a request to get all breeds
         axios.get(process.env.VUE_APP_LIST_ALL_BREEDS, { crossdomain: true })
           .then(({ data = {} }) => {
             if (data.status !== 'success' || !Object.keys(data.message || {}).length) {
@@ -86,21 +87,27 @@ export default new Vuex.Store({
       });
     },
     getNewBreed({ state, commit }) {
+      // Get all unseenBreeds
       const unseenBreeds = getValue(state, 'all', [])
         .filter(breed => !(state.viewed || []).includes(breed));
+
       let url = process.env.VUE_APP_IMAGE_BY_BREED;
       if (!unseenBreeds.length) {
+        // If all breeds are seen, well, we random a new one
         url = url.replace('/BREED_NAME', '');
       } else {
+        // Random one among new breeds
         const randomBreed = unseenBreeds[Math.floor(Math.random() * unseenBreeds.length)];
         url = url.replace('BREED_NAME', randomBreed);
       }
+
       return new Promise((resolve, reject) => {
         axios.get(url, { crossdomain: true })
           .then(({ data = {} }) => {
             if (data.status !== 'success' || !getValue(data, 'message')) {
               return reject(new Error('Unable to find any images'));
             }
+            // Try to get the breed name from the URL
             const image = data.message;
             const splitByBreed = image.split('breeds/')[1];
             let name = '';
