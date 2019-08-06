@@ -1,0 +1,35 @@
+version: 2
+
+jobs:
+  build:
+    docker:
+      - image: cypress/base:8
+
+    steps:
+      - checkout
+
+      - restore_cache:
+          keys:
+          - v1-dependencies-{{ checksum "package.json" }}-{{ checksum "circle.yml" }}
+
+      - run: 
+          name: Installing dependencies
+          command: npm install
+
+      - save_cache:
+          paths:
+            - node_modules
+            - ~/.cache
+          key: v1-dependencies-{{ checksum "package.json" }}-{{ checksum "circle.yml" }}
+        
+      - run: 
+          name: Linting Code
+          command: npm run lint
+
+      - run: 
+          name: Running unit tests
+          command: npm run test:unit
+
+      - run:
+          name: Deploying
+          command: sh deploy.sh
